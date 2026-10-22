@@ -1,0 +1,44 @@
+{
+    "olv.portal": {
+        "user_menu": "Page de l'utilisateur",
+        "activity": "Suivi des activités",
+        "community": "Communautés",
+        "messages": "Messages",
+        "news": "Notifications",
+        "back": "Retour",
+        "exit": "Quitter",
+        "favorites_communities": "Communautés favorites",
+        "community_headline": "Nouvelles communautés",
+        "special_headline": "Spécial",
+        "show_more": "Afficher plus",
+        "search_titles": "Rechercher des communautés",
+        "wiiu_games": "Jeux Wii U",
+        "3ds_games": "Jeux 3DS",
+        "wiiu3ds_games": "Jeux Wii U・3DS",
+        "virtualconsole": "Console virtuelle",
+        "all_software": "Tous les logiciels",
+        "others": "Autres",
+        "search": "Rechercher",
+        "filter": "Filtrer",
+        "identified_user_banner_title": "Recevez les dernières nouvelles ici !",
+        "identified_user_banner_text": "Publications des utilisateurs vérifiés",
+        "gender": "Genre",
+        "user_region": "Région de l'utilisateur",
+        "game_experience": "Expérience de jeu",
+        "posts": "Publications",
+        "followers": "Abonnés",
+        "following": "Abonnements",
+        "follow": "Suivre",
+        "unfollow": "Ne plus suivre",
+        "friends": "Amis",
+        "friend_requests": "Demandes d'amis",
+        "updates": "Mises à jour",
+        "played": "Logiciels utilisés"
+    },
+    "olv.n3ds": {
+
+    },
+    "olv.offdevice": {
+
+    }
+}

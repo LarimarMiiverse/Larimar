@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<div id="body">
+    <header id="header">
+        <a id="header-favorites-button" href="/communities/favorites" data-pjax="#body"><%= lang["olv.portal"].favorites_communities %></a>
+        <h1 id="page-title" class="left"><%= lang["olv.portal"].community %></h1>
+    </header>
+
+    <div id="community-top" class="body-content">
+        <!-- <div class="close-announce-content test-close-announce">
+            <a href="/posts/AYYGAABB4-cxFHFfgxc12Q" data-pjax="#body">
+                <span class="title">New Miiverse Service Announcement !</span>
+            </a>
+        </div> -->
+
+        <div class="community-list">
+            <div class="banner-container">
+                <a class="button identified-user-button" data-pjax="#body" href="/identified_user_posts">
+                    <span class="title"><%= lang["olv.portal"].identified_user_banner_title %></span>
+                    <span class="text"><%= lang["olv.portal"].identified_user_banner_text %></span>
+                </a>
+            </div>
+
+            <span type="button" class="fixed-bottom-button search-button" id="community-search"><%= lang["olv.portal"].search %>
+                <input name="query" class="title-search-query" minlength="2" maxlength="20" inputform="monospace" guidestring="Search Communities" data-pjax="#body">
+            </span>
+
+            <div class="headline headline-wiiu with-filter">
+                <h2><%= lang["olv.portal"].community_headline %></h2>
+                <div class="with-filter-right">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-sound="SE_WAVE_BALLOON_OPEN" href="#"><%= lang["olv.portal"].filter %></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="button" href="#"><%= lang["olv.portal"].all_software %></a></li>
+                            <li><a class="button" href="#"><%= lang["olv.portal"].wiiu_games %></a></li>
+                            <li><a class="button" href="#"><%= lang["olv.portal"].virtualconsole %></a></li>
+                            <li><a class="button" href="#"><%= lang["olv.portal"].others %></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-content-with-icon-column" id="community-top-content">
+                <%- include('partials/community') %>
+            </ul>
+
+            <a class="more-button scroll" href="/communities/all" data-pjax="#body"><%= lang["olv.portal"].show_more %></a>
+        </div>
+    </div>
+</div>

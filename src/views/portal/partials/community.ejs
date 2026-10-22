@@ -1,0 +1,25 @@
+<% communities.forEach(community => { %>
+    <li id="community-<%= community.olive_community_id %>">
+        <span class="icon-container">
+            <img src="<%= community.icon %>" class="icon">
+        </span>
+        <a href="/titles/<%= community.olive_title_id %>/<%= community.olive_community_id %>" data-pjax="#body" class="scroll to-community-button"></a>
+        <div class="body">
+            <div class="body-content">
+                <span class="community-name title"><%= community.name %></span>
+                <span class="platform-tag platform-tag-<%= community.platform_id == '1' ? 'wiiu' : '3ds' %>"></span>
+                <span class="text">
+                    <% if (community.platform_type == '1' && community.platform_id == '1') { %>
+                        <%= lang["olv.portal"]["wiiu_games"] %> 
+                    <% } else if (community.platform_type == '1' && community.platform_id != '1') { %>
+                        <%= lang["olv.portal"]["3ds_games"] %>
+                    <% } else if (community.platform_type == '2') { %>
+                        <%= lang["olv.portal"]["3ds_games"] %>
+                    <% } else { %>
+                        <%= lang["olv.portal"]["others"] %>
+                    <% } %>
+                </span>
+            </div>
+        </div>
+    </li>
+<% }) %>

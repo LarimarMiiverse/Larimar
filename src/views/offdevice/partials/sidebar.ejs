@@ -1,0 +1,47 @@
+<div id="sub-body">
+  <menu id="global-menu">
+    <li id="global-menu-logo">
+      <h1>
+        <img src="/img/menu-logo.png" alt="Miiverse" width="200" height="55">
+      </h1>
+    </li>
+    <% if (account) { %>
+      <li id="global-menu-list">
+        <ul>
+          <li id="global-menu-mymenu">
+            <a href="/users/<%= account?.user_id %>">
+              <span class="icon-container">
+                <img src="<%= account.mii_url || '/img/default_mii/normal_face.png' %>" alt="User Menu">
+              </span>
+              <span>User Menu</span>
+            </a>
+          </li>
+          <li id="global-menu-feed">
+            <a href="/" class="symbol">
+              <span>Activity</span>
+            </a>
+          </li>
+          <li id="global-menu-community">
+            <a href="/titles" class="symbol">
+              <span>Communities</span>
+            </a>
+          </li>
+          <li id="global-menu-news">
+            <a href="/news/my_news" class="symbol">
+              <span>Notifications</span>
+              <span class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+    <% } else { %>
+      <li id="global-menu-login">
+        <form id="login_form" action="/act/login" method="get">
+          <input type="hidden" name="location" value="">
+          <input type="submit" class="black-button" value="Sign in">
+        </form>
+      </li>
+    <% } %>
+  </menu>
+</div>

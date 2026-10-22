@@ -1,0 +1,24 @@
+<% menu = (typeof menu === 'undefined') ? true : menu; %>
+<% if (!isPjax) { %>
+<!DOCTYPE html>
+<html lang="<%= local %>">
+<head>
+  <meta charset="utf-8">
+  <title><%= typeof title !== 'undefined' ? title : "Portal" %></title>
+
+  <link rel="stylesheet" href="/css/portal.css">
+  <script src="/js/portal/complete-emu.js"></script>
+  <script src="/js/portal/complete.js"></script>
+</head>
+
+<body
+  data-hashed-pid=""
+  data-user-id=""
+  data-profile-url="/users/<%= account.user_id %>"
+  data-lang="<%= local %>"
+  data-country="">
+
+  <% if (menu !== false) { %>
+    <%- include('sidebar') %>
+  <% } %>
+<% } %>

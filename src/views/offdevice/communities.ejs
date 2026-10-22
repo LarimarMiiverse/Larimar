@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+  <div id="wrapper">
+
+    <%- include('partials/sidebar') %>
+
+    <div id="main-body">
+      <h2 class="welcome-message">Welcome to Miiverse!</h2>
+      <div id="about">
+        <img src="/img/welcome-image.png">
+        <p>
+          Miiverse is a service that lets you communicate with other players from around the world.
+          It is accessible via Wii U and systems in the Nintendo 3DS family.
+        </p>
+      </div>
+
+      <div class="body-content" id="community-top" data-region="USA">
+        <div id="identified-user-banner">
+          <a href="/identified_user_posts" data-pjax="#body" class="list-button us">
+            <span class="title">Get the latest news here!</span>
+            <span class="text">Posts from Verified Users</span>
+          </a>
+        </div>
+
+        <form method="GET" action="/titles/search" class="search">
+          <input type="text" name="query" placeholder="Search" minlength="2" maxlength="16">
+          <input type="submit" value="q" title="Search">
+        </form>
+
+        <div id="tab-wiiu-body" class="tab-body">
+          <h3 class="label label-wiiu">New Communities
+            <button id="community-filter" class="symbol" type="button" data-modal-open="#wiiu-filter-select-page">Filter</button>
+          </h3>
+
+          <%- include('partials/community') %>
+
+          <div class="buttons-content">
+            <a href="/communities/categories/wiiu_all" class="button">Show More</a>
+          </div>
+        </div>
+
+      <div id="about">
+        <a href="/support/nnid/en" class="arrow-button">
+          <span>Support</span>
+        </a>
+        <a href="/guide/terms" class="arrow-button">
+          <span>Use of Miiverse</span>
+        </a>
+        <a href="/corp/privacy.jsp" class="arrow-button">
+          <span>Privacy Policy</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+<%- include('partials/footer') %>
