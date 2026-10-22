@@ -36,7 +36,7 @@
         "played": "Logiciels utilisés",
         "settings": "Paramètres",
         "instance_label": "Miiverse",
-        "instance_current": "Vous utilisez Larimar (bêta). Juxt reste le Miiverse par défaut de Revivetendo.",
+        "instance_current": "Vous utilisez Larimar, qui n'est pas encore terminé. Juxt reste le Miiverse par défaut de Revivetendo.",
         "instance_switch_juxt": "Revenir à Juxt",
         "instance_switched": "C'est fait ! Fermez Miiverse et rouvrez-le pour revenir à Juxt."
     },
