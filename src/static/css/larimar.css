@@ -1,29 +1,22 @@
 /* Larimar's own additions, loaded after the original portal.css.
  *
- * portal.css keeps content clear of the 160px global menu by giving each
- * known kind of top-level block "margin: 30px 40px 30px 200px". Larimar's
- * pages have top-level blocks it doesn't list, so give them the same. */
-.body-content > .user-info,
-.body-content > .tab-body,
-.body-content > .user-page-content,
-.body-content > .settings-list,
-.body-content > form,
-.body-content > .window,
-.body-content > .tutorial-window,
-.body-content > p,
-.body-content > .button {
-    margin: 30px 40px 30px 200px;
+ * One offset for the 160px global menu on every page, instead of the side
+ * margins portal.css gives each kind of block (and its -20px pull on the
+ * user page tabs). #header already clears the menu itself. */
+#body > .body-content {
+    margin-left: 160px;
 }
 
-/* .tab-header already has that margin, and the tabs come right after it */
-.body-content > .tab-body {
-    margin-top: 0;
-}
-
-/* portal.css pulls the user page tabs 20px wider on each side
- * (.user-page .tab-header.user-menu-relationship), expecting an already
- * indented parent; keep that look but clear the menu. */
-.user-page.body-content > .tab-header.user-menu-relationship {
-    margin-left: 180px;
-    margin-right: 20px;
+.body-content > .no-content-window,
+.body-content > .tab-header,
+.body-content > .user-menu,
+.body-content > .news-label,
+.body-content.message-post-list,
+.body-content#post-permalink,
+.body-content#reply-permalink,
+.body-content.post-list,
+.user-page .tab-header.user-menu-activity,
+.user-page .tab-header.user-menu-relationship {
+    margin-left: 0;
+    margin-right: 0;
 }
