@@ -1,0 +1,83 @@
+/* Minimal Larimar portal styles for the Wii U GamePad/TV (854x480 viewport). */
+body {
+    margin: 0;
+    background: #f0f0f0;
+    color: #323232;
+    font-family: sans-serif;
+    font-size: 22px;
+}
+
+.none {
+    display: none !important;
+}
+
+#global-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #3c3c3c;
+}
+
+#global-menu li a {
+    display: block;
+    padding: 18px 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #555;
+}
+
+#global-menu .mii-icon img {
+    display: block;
+    width: 48px;
+    height: 48px;
+}
+
+#body {
+    margin-left: 150px;
+    padding: 0 20px 80px;
+}
+
+#header {
+    padding: 16px 0;
+    border-bottom: 2px solid #48b6d6;
+}
+
+#page-title {
+    margin: 0;
+    font-size: 28px;
+}
+
+.button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 14px 28px;
+    border: 0;
+    border-radius: 8px;
+    background: #48b6d6;
+    color: #fff;
+    font-size: 22px;
+    text-decoration: none;
+}
+
+.settings-list {
+    list-style: none;
+    padding: 0;
+}
+
+.settings-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.window {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+}
