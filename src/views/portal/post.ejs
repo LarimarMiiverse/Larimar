@@ -38,8 +38,9 @@
 </div>
 
 <script>
-// The Wii U memo app: open it, wait until the player closes it, then keep
-// the drawing as a base64 PNG (wiiuMemo.getImage(false), 320x120).
+// The Wii U memo app: open it, wait until the player closes it, then submit
+// getImage(true) (zlib-compressed TGA, what Miiverse posted) and preview
+// getImage(false) (a BMP).
 (function () {
     var button = document.getElementById('larimar-draw-button');
     var preview = document.getElementById('larimar-memo-preview');
@@ -52,10 +53,10 @@
         var poll = setInterval(function () {
             if (!wiiuMemo.isFinish()) return;
             clearInterval(poll);
-            var png = wiiuMemo.getImage(false);
-            if (png) {
-                value.value = png;
-                preview.src = 'data:image/png;base64,' + png;
+            var tgaz = wiiuMemo.getImage(true);
+            if (tgaz) {
+                value.value = tgaz;
+                preview.src = 'data:image/bmp;base64,' + wiiuMemo.getImage(false);
                 preview.className = '';
             }
         }, 40);
