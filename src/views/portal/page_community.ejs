@@ -1,5 +1,36 @@
 <%- include('partials/header') %>
+<% const t = lang["olv.portal"]; %>
+<% const base = '/titles/' + community.olive_title_id + '/' + community.olive_community_id; %>
 
 <div id="body">
-    
+    <header id="header">
+        <h1 id="page-title" class="left"><%= community.name %></h1>
+    </header>
+
+    <div class="body-content" id="community-post-list">
+        <% if (community.banner) { %>
+            <div class="header-banner-container">
+                <img src="<%= community.banner %>" class="header-banner">
+            </div>
+        <% } %>
+
+        <div class="community-info info-content<%= community.banner ? ' with-header-banner' : '' %>">
+            <span class="icon-container">
+                <img src="<%= community.icon || '/img/larimar/general-icon.png' %>" class="icon">
+            </span>
+            <a href="#" class="favorite-button button<%= favorite ? ' checked' : '' %>"
+               data-action-favorite="<%= base %>/favorite"
+               data-action-unfavorite="<%= base %>/unfavorite"
+               data-sound="<%= favorite ? 'SE_WAVE_CHECKBOX_UNCHECK' : 'SE_WAVE_CHECKBOX_CHECK' %>"></a>
+            <span class="title"><%= community.name %></span>
+            <span class="text"><%= community.description %></span>
+            <span class="text"><%= t['category_' + community.category] %> · <%= t.favorites_count.replace('%n', community.favorite_count) %></span>
+        </div>
+
+        <div class="no-content-window">
+            <div class="window">
+                <p><%= t.no_community_posts %></p>
+            </div>
+        </div>
+    </div>
 </div>

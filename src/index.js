@@ -24,6 +24,8 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname, './static')));
 app.use('/css', express.static(path.join(__dirname, 'static/css')));
+// Community icons and banners uploaded from the staff page
+app.use('/media', express.static(path.join(__dirname, '..', 'media')));
 app.use(express.json());
 
 app.use(express.urlencoded({

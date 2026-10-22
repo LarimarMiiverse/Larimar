@@ -90,21 +90,74 @@ async function getFollowList(pid, tab) {
   return rows;
 }
 
-async function getAllCommunities() {
+const COMMUNITY_COLUMNS = `c.*,
+  (SELECT COUNT(*) FROM community_favorites f WHERE f.community_id = c.community_id) AS favorite_count`;
+
+// Visible communities, optionally of one category or matching a name search
+async function getCommunities({ category, search } = {}) {
+  const where = ['(c.hidden IS NULL OR c.hidden = 0)'];
+  const params = [];
+
+  if (category) {
+    where.push('c.category = ?');
+    params.push(category);
+  }
+  if (search) {
+    // The table's utf8mb4_bin collation would make LIKE case-sensitive
+    where.push('c.name COLLATE utf8mb4_general_ci LIKE ?');
+    params.push('%' + search.replace(/[\\%_]/g, '\\$&') + '%');
+  }
+
   const [rows] = await pool.query(
-    'SELECT * FROM communities ORDER BY created_at DESC'
+    `SELECT ${COMMUNITY_COLUMNS} FROM communities c WHERE ${where.join(' AND ')} ORDER BY c.sort_order, c.name`,
+    params
   );
 
   return rows;
 }
 
+async function getAllCommunities() {
+  return getCommunities();
+}
+
+// Community pages live at /titles/<olive_title_id>/<olive_community_id>; the
+// community ID alone identifies it (for topic communities both are the same).
 async function getCommunityById(olive_title_id, olive_community_id) {
   const [rows] = await pool.query(
-    'SELECT * FROM communities WHERE olive_title_id = ? AND olive_community_id = ?',
-    [olive_title_id, olive_community_id]
+    `SELECT ${COMMUNITY_COLUMNS} FROM communities c WHERE c.olive_community_id = ?`,
+    [olive_community_id]
   );
 
   return rows[0] || null;
+}
+
+async function getFavoriteCommunities(pid) {
+  const [rows] = await pool.query(
+    `SELECT ${COMMUNITY_COLUMNS} FROM communities c
+     JOIN community_favorites fav ON fav.community_id = c.community_id AND fav.pid = ?
+     WHERE (c.hidden IS NULL OR c.hidden = 0)
+     ORDER BY fav.created_at DESC`,
+    [pid]
+  );
+
+  return rows;
+}
+
+async function isFavoriteCommunity(pid, community_id) {
+  const [rows] = await pool.query(
+    'SELECT 1 FROM community_favorites WHERE pid = ? AND community_id = ?',
+    [pid, community_id]
+  );
+
+  return rows.length > 0;
+}
+
+async function setFavoriteCommunity(pid, community_id, favorite) {
+  if (favorite) {
+    await pool.query('INSERT IGNORE INTO community_favorites (pid, community_id) VALUES (?, ?)', [pid, community_id]);
+  } else {
+    await pool.query('DELETE FROM community_favorites WHERE pid = ? AND community_id = ?', [pid, community_id]);
+  }
 }
 
 module.exports = {
@@ -117,6 +170,10 @@ module.exports = {
   follow,
   unfollow,
   getFollowList,
+  getCommunities,
   getAllCommunities,
-  getCommunityById
+  getCommunityById,
+  getFavoriteCommunities,
+  isFavoriteCommunity,
+  setFavoriteCommunity
 };

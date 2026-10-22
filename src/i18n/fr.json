@@ -50,7 +50,20 @@
         "save": "Enregistrer",
         "no_posts": "Aucun message pour l'instant.",
         "no_following": "Aucun abonnement pour l'instant.",
-        "no_followers": "Aucun abonné pour l'instant."
+        "no_followers": "Aucun abonné pour l'instant.",
+        "all_communities": "Toutes les communautés",
+        "search_results": "Résultats de recherche",
+        "no_search_results": "Aucune communauté trouvée.",
+        "no_communities": "Il n'y a pas encore de communauté ici.",
+        "no_favorites": "Touchez l'icône ☆ sur la page d'une communauté pour l'ajouter à vos favoris.",
+        "no_community_posts": "Aucun message dans cette communauté pour l'instant.",
+        "favorites_count": "%n favoris",
+        "category_games": "Jeux",
+        "category_creative": "Art et créativité",
+        "category_music": "Musique",
+        "category_chat": "Discussion",
+        "category_apps": "Applications",
+        "category_news": "Actualités"
     },
     "olv.n3ds": {
 
