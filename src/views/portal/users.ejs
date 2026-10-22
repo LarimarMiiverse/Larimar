@@ -27,7 +27,7 @@
             <% } else { %>
                 <div class="toggle-button">
                     <a href="#" class="follow-button button<%= following ? ' none' : '' %>" data-action="<%= base %>/follow" data-sound="SE_WAVE_OK"><%= t.follow %></a>
-                    <form method="post" action="<%= base %>/unfollow" class="<%= following ? '' : 'none' %>">
+                    <form method="post" action="<%= base %>/unfollow" data-allow-submission="1" class="<%= following ? '' : 'none' %>">
                         <input type="submit" class="unfollow-button button" value="<%= t.unfollow %>" data-sound="SE_WAVE_OK">
                     </form>
                 </div>
