@@ -7,7 +7,7 @@ const translations = {
 };
 
 async function i18nMiddleware(req, res, next) {
-    const header = req.headers['accept-language'] || null;
+    const header = req.headers['accept-language'] || 'en';
 
     let lang = header.slice(0, 2).toLowerCase();
 

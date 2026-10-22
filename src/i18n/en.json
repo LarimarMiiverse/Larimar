@@ -33,7 +33,12 @@
         "friends": "Friends",
         "friend_requests": "Friend Requests",
         "updates": "Updates",
-        "played": "Software Used"
+        "played": "Software Used",
+        "settings": "Settings",
+        "instance_label": "Miiverse",
+        "instance_current": "You're using Larimar (beta). Juxt is still Revivetendo's default Miiverse.",
+        "instance_switch_juxt": "Switch back to Juxt",
+        "instance_switched": "Done! Close Miiverse and open it again to go back to Juxt."
     },
     "olv.n3ds": {
 

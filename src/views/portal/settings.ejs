@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div id="body">
+    <header id="header">
+        <h1 id="page-title" class="left"><%= lang["olv.portal"].settings %></h1>
+    </header>
+
+    <div class="body-content" id="settings">
+        <% if (switched) { %>
+            <div class="no-content-window">
+                <div class="window">
+                    <p><%= lang["olv.portal"].instance_switched %></p>
+                </div>
+            </div>
+        <% } else { %>
+            <ul class="settings-list">
+                <li>
+                    <p class="settings-label"><%= lang["olv.portal"].instance_label %></p>
+                    <p><%= lang["olv.portal"].instance_current %></p>
+                    <form method="post" action="/settings/instance">
+                        <input type="hidden" name="instance" value="juxt">
+                        <input type="submit" class="button" value="<%= lang["olv.portal"].instance_switch_juxt %>">
+                    </form>
+                </li>
+            </ul>
+        <% } %>
+    </div>
+</div>

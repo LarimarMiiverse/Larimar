@@ -14,6 +14,12 @@ const routes = require('./routes');
 
 const app = express();
 
+// account-proxy terminates TLS and forwards from 127.0.0.1
+app.set('trust proxy', 'loopback');
+
+// Juxt's discovery only sends consoles here while this answers.
+app.get('/health', (req, res) => res.send('ok'));
+
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname, './static')));

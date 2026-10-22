@@ -4,4 +4,10 @@
     <header id="header">
         <h1 id="page-title" class="left"><%= own_profile ? "User Page" : account.screen_name + "'s Profile" %></h1>
     </header>
+
+    <% if (own_profile) { %>
+        <div class="body-content">
+            <a href="/settings" class="button" data-pjax="#body"><%= lang["olv.portal"].settings %></a>
+        </div>
+    <% } %>
 </div>
