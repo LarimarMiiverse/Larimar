@@ -160,6 +160,70 @@ async function setFavoriteCommunity(pid, community_id, favorite) {
   }
 }
 
+const POST_COLUMNS = `p.id, p.community_id, p.pid, p.body, p.painting, p.spoiler, p.created_at,
+  a.user_id, a.screen_name,
+  c.name AS community_name, c.olive_title_id, c.olive_community_id, c.icon AS community_icon`;
+const POST_JOINS = `FROM posts p
+  JOIN accounts a ON a.pid = p.pid
+  JOIN communities c ON c.community_id = p.community_id`;
+
+async function createPost(community_id, pid, body, spoiler) {
+  const [result] = await pool.query(
+    'INSERT INTO posts (community_id, pid, body, spoiler) VALUES (?, ?, ?, ?)',
+    [community_id, pid, body, spoiler ? 1 : 0]
+  );
+
+  return result.insertId;
+}
+
+async function setPostPainting(id, painting) {
+  await pool.query('UPDATE posts SET painting = ? WHERE id = ?', [painting, id]);
+}
+
+async function getCommunityPosts(community_id, limit = 50) {
+  const [rows] = await pool.query(
+    `SELECT ${POST_COLUMNS} ${POST_JOINS}
+     WHERE p.community_id = ? AND p.deleted = 0
+     ORDER BY p.created_at DESC, p.id DESC LIMIT ?`,
+    [community_id, limit]
+  );
+
+  return rows;
+}
+
+async function getUserPosts(pid, limit = 50) {
+  const [rows] = await pool.query(
+    `SELECT ${POST_COLUMNS} ${POST_JOINS}
+     WHERE p.pid = ? AND p.deleted = 0 AND (c.hidden IS NULL OR c.hidden = 0)
+     ORDER BY p.created_at DESC, p.id DESC LIMIT ?`,
+    [pid, limit]
+  );
+
+  return rows;
+}
+
+async function countUserPosts(pid) {
+  const [rows] = await pool.query('SELECT COUNT(*) AS n FROM posts WHERE pid = ? AND deleted = 0', [pid]);
+
+  return rows[0].n;
+}
+
+async function countCommunityPosts(community_id) {
+  const [rows] = await pool.query('SELECT COUNT(*) AS n FROM posts WHERE community_id = ? AND deleted = 0', [community_id]);
+
+  return rows[0].n;
+}
+
+// Seconds since this user's last post, or null if they never posted
+async function secondsSinceLastPost(pid) {
+  const [rows] = await pool.query(
+    'SELECT TIMESTAMPDIFF(SECOND, MAX(created_at), current_timestamp()) AS s FROM posts WHERE pid = ?',
+    [pid]
+  );
+
+  return rows[0].s;
+}
+
 module.exports = {
   pool,
   connectDB,
@@ -175,5 +239,12 @@ module.exports = {
   getCommunityById,
   getFavoriteCommunities,
   isFavoriteCommunity,
-  setFavoriteCommunity
+  setFavoriteCommunity,
+  createPost,
+  setPostPainting,
+  getCommunityPosts,
+  getUserPosts,
+  countUserPosts,
+  countCommunityPosts,
+  secondsSinceLastPost
 };

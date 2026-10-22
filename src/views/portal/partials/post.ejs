@@ -1,0 +1,33 @@
+<%# One post in a .post-list. Needs: post, timeAgo, lang, local; showCommunity for user pages. %>
+<% const t = lang["olv.portal"]; %>
+<div class="post scroll<%= post.spoiler ? ' hidden' : '' %>" id="post-<%= post.id %>">
+    <a href="/users/<%= encodeURIComponent(post.user_id) %>" data-pjax="#body" class="user-icon-container scroll-focus">
+        <img src="/mii/<%= post.pid %>/normal_face.png" class="user-icon" onerror="this.onerror=null;this.src='/img/default_mii/normal_face.png';">
+    </a>
+    <div class="post-body">
+        <header>
+            <span class="user-name"><%= post.screen_name %></span>
+            <span class="timestamp"><%= timeAgo(post.created_at, local) %></span>
+            <% if (typeof showCommunity !== 'undefined' && showCommunity) { %>
+                <a href="/titles/<%= post.olive_title_id %>/<%= post.olive_community_id %>" data-pjax="#body" class="community-name"><%= post.community_name %></a>
+            <% } %>
+            <% if (post.spoiler) { %>
+                <span class="spoiler-status spoiler"><%= t.spoilers %></span>
+            <% } %>
+        </header>
+        <% if (post.spoiler) { %>
+            <div class="hidden-content">
+                <p><%= t.spoiler_hidden %></p>
+                <button type="button" class="hidden-content-button"><%= t.view_post %></button>
+            </div>
+        <% } %>
+        <div class="post-content">
+            <% if (post.body) { %>
+                <p class="post-content-text"><%= post.body %></p>
+            <% } %>
+            <% if (post.painting) { %>
+                <p class="post-content-memo"><img src="<%= post.painting %>" class="post-memo"></p>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -51,7 +51,7 @@
             <li id="tab-header-user-posts"<%- tab === 'posts' ? ' class="selected"' : '' %>>
                 <a href="<%= base %>" data-pjax="#body" data-sound="SE_WAVE_SELECT_TAB">
                     <span class="label"><%= t.posts %></span>
-                    <span class="number"><span>0</span></span>
+                    <span class="number"><span><%= postCount %></span></span>
                 </a>
             </li>
             <li id="tab-header-user-following"<%- tab === 'following' ? ' class="selected"' : '' %>>
@@ -69,7 +69,13 @@
         </menu>
 
         <div class="tab-body">
-            <% if (tab === 'posts' || list.length === 0) { %>
+            <% if (tab === 'posts' && list.length) { %>
+                <div class="post-list">
+                    <% list.forEach(function (post) { %>
+                        <%- include('partials/post', { post, showCommunity: true }) %>
+                    <% }); %>
+                </div>
+            <% } else if (list.length === 0) { %>
                 <div class="no-content-window">
                     <div class="window">
                         <p><%= tab === 'posts' ? t.no_posts : (tab === 'following' ? t.no_following : t.no_followers) %></p>

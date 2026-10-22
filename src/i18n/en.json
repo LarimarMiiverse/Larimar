@@ -63,7 +63,21 @@
         "category_music": "Music",
         "category_chat": "Chat",
         "category_apps": "Apps",
-        "category_news": "News"
+        "category_news": "News",
+        "post": "Post",
+        "new_post": "New Post",
+        "post_placeholder": "Share your thoughts...",
+        "draw": "Draw",
+        "spoilers": "Spoilers",
+        "spoiler_hidden": "This post contains spoilers.",
+        "view_post": "View Post",
+        "cancel": "Cancel",
+        "recent_posts": "Recent Posts",
+        "posts_count": "%n posts",
+        "post_empty": "Write something or add a drawing first.",
+        "post_too_long": "Your post is too long.",
+        "post_too_fast": "Please wait a few seconds before posting again.",
+        "cannot_post": "You can't post in this community."
     },
     "olv.n3ds": {
 

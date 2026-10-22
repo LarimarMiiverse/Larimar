@@ -4,13 +4,17 @@
 
 <div id="body">
     <header id="header">
+        <% if (canPost) { %>
+            <%# No data-pjax: the post page's memo script needs a full page load %>
+            <a id="header-post-button" class="header-button" href="<%= base %>/post" data-sound="SE_WAVE_SELECT"><%= t.post %></a>
+        <% } %>
         <h1 id="page-title" class="left"><%= community.name %></h1>
     </header>
 
     <div class="body-content" id="community-post-list">
         <% if (community.banner) { %>
             <div class="header-banner-container">
-                <img src="<%= community.banner %>" class="header-banner">
+                <img src="<%= community.banner %>" class="header-banner<%= canPost ? ' with-top-button' : '' %>">
             </div>
         <% } %>
 
@@ -24,13 +28,26 @@
                data-sound="<%= favorite ? 'SE_WAVE_CHECKBOX_UNCHECK' : 'SE_WAVE_CHECKBOX_CHECK' %>"></a>
             <span class="title"><%= community.name %></span>
             <span class="text"><%= community.description %></span>
-            <span class="text"><%= t['category_' + community.category] %> · <%= t.favorites_count.replace('%n', community.favorite_count) %></span>
+            <span class="text"><%= t['category_' + community.category] %> · <%= t.posts_count.replace('%n', postCount) %> · <%= t.favorites_count.replace('%n', community.favorite_count) %></span>
         </div>
 
-        <div class="no-content-window">
-            <div class="window">
-                <p><%= t.no_community_posts %></p>
-            </div>
+        <%# The original portal script hides #header-post-button unless this says 1 %>
+        <div class="post-headline" data-show-post-button="<%= canPost ? '1' : '0' %>">
+            <h2><%= t.recent_posts %></h2>
         </div>
+
+        <% if (posts.length) { %>
+            <div class="post-list">
+                <% posts.forEach(function (post) { %>
+                    <%- include('partials/post', { post }) %>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="no-content-window">
+                <div class="window">
+                    <p><%= t.no_community_posts %></p>
+                </div>
+            </div>
+        <% } %>
     </div>
 </div>

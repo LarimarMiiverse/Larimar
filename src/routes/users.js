@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('../logger');
-const { getUserById, getFollowCounts, isFollowing, follow, unfollow, getFollowList } = require('../database');
+const { getUserById, getFollowCounts, isFollowing, follow, unfollow, getFollowList, getUserPosts, countUserPosts } = require('../database');
+const { timeAgo } = require('../posts');
 
 const router = express.Router();
 
@@ -26,10 +27,11 @@ async function renderUserPage(req, res, tab) {
         }
 
         const own_profile = req.account.pid === user.pid;
-        const [counts, following, list] = await Promise.all([
+        const [counts, following, list, postCount] = await Promise.all([
             getFollowCounts(user.pid),
             own_profile ? false : isFollowing(req.account.pid, user.pid),
-            tab === 'posts' ? [] : getFollowList(user.pid, tab)
+            tab === 'posts' ? getUserPosts(user.pid) : getFollowList(user.pid, tab),
+            countUserPosts(user.pid)
         ]);
 
         res.render(req.directory + '/users.ejs', {
@@ -40,6 +42,8 @@ async function renderUserPage(req, res, tab) {
             counts,
             following,
             list,
+            postCount,
+            timeAgo,
             region: regionName(user.country, res.locals.local)
         });
     } catch (err) {
