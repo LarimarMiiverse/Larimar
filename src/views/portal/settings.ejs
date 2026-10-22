@@ -1,25 +1,47 @@
 <%- include('partials/header') %>
+<% const t = lang["olv.portal"]; %>
 
 <div id="body">
     <header id="header">
-        <h1 id="page-title" class="left"><%= lang["olv.portal"].settings %></h1>
+        <h1 id="page-title" class="left"><%= t.settings %></h1>
     </header>
 
     <div class="body-content" id="settings">
         <% if (switched) { %>
             <div class="no-content-window">
                 <div class="window">
-                    <p><%= lang["olv.portal"].instance_switched %></p>
+                    <p><%= t.instance_switched %></p>
                 </div>
             </div>
         <% } else { %>
+            <form method="post" action="/settings/profile">
+                <ul class="settings-list">
+                    <li>
+                        <p class="settings-label"><%= t.profile_comment %></p>
+                        <textarea name="profile_comment" maxlength="400" rows="4" class="textarea"><%= account.profile_comment || '' %></textarea>
+                    </li>
+                    <li>
+                        <p class="settings-label"><%= t.game_experience %></p>
+                        <% [t.beginner, t.intermediate, t.expert].forEach(function (label, i) { %>
+                            <label class="radio-container">
+                                <input type="radio" name="game_skill" value="<%= i %>"<%= account.game_skill === i ? ' checked' : '' %>>
+                                <%= label %>
+                            </label>
+                        <% }); %>
+                    </li>
+                    <li>
+                        <input type="submit" class="button" value="<%= t.save %>">
+                    </li>
+                </ul>
+            </form>
+
             <ul class="settings-list">
                 <li>
-                    <p class="settings-label"><%= lang["olv.portal"].instance_label %></p>
-                    <p><%= lang["olv.portal"].instance_current %></p>
+                    <p class="settings-label"><%= t.instance_label %></p>
+                    <p><%= t.instance_current %></p>
                     <form method="post" action="/settings/instance">
                         <input type="hidden" name="instance" value="juxt">
-                        <input type="submit" class="button" value="<%= lang["olv.portal"].instance_switch_juxt %>">
+                        <input type="submit" class="button" value="<%= t.instance_switch_juxt %>">
                     </form>
                 </li>
             </ul>

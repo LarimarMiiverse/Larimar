@@ -1,13 +1,100 @@
 <%- include('partials/header') %>
+<% const t = lang["olv.portal"]; %>
+<% const base = '/users/' + encodeURIComponent(user.user_id); %>
+<% const skills = [t.beginner, t.intermediate, t.expert]; %>
 
 <div id="body">
     <header id="header">
-        <h1 id="page-title" class="left"><%= own_profile ? "User Page" : account.screen_name + "'s Profile" %></h1>
+        <h1 id="page-title" class="left"><%= own_profile ? t.user_page : user.screen_name %></h1>
     </header>
 
-    <% if (own_profile) { %>
-        <div class="body-content">
-            <a href="/settings" class="button" data-pjax="#body"><%= lang["olv.portal"].settings %></a>
+    <div class="body-content tab3-content user-page<%= own_profile ? '' : ' is-visitor' %>" id="user-page">
+        <div class="user-info info-content">
+            <span class="icon-container">
+                <img class="icon" src="/mii/<%= user.pid %>/normal_face.png" onerror="this.onerror=null;this.src='/img/default_mii/normal_face.png';">
+            </span>
+            <p class="title">
+                <span class="nick-name"><%= user.screen_name %></span>
+                <span class="id-name"><%= user.user_id %></span>
+            </p>
+
+            <div class="user-profile-memo-container">
+                <p class="no-profile-memo"><%= user.profile_comment || t.no_profile_comment %></p>
+            </div>
+
+            <% if (own_profile) { %>
+                <a href="/settings" class="button edit-button" data-pjax="#body"><%= t.edit_profile %></a>
+            <% } else { %>
+                <div class="toggle-button">
+                    <a href="#" class="follow-button button<%= following ? ' none' : '' %>" data-action="<%= base %>/follow" data-sound="SE_WAVE_OK"><%= t.follow %></a>
+                    <form method="post" action="<%= base %>/unfollow" class="<%= following ? '' : 'none' %>">
+                        <input type="submit" class="unfollow-button button" value="<%= t.unfollow %>" data-sound="SE_WAVE_OK">
+                    </form>
+                </div>
+            <% } %>
+
+            <div class="user-data">
+                <table>
+                    <tr>
+                        <th><%= t.user_region %></th>
+                        <td><%= region || '-' %></td>
+                    </tr>
+                    <tr>
+                        <th><%= t.game_experience %></th>
+                        <td><%= skills[user.game_skill] || t.game_skill_unknown %></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    <% } %>
+
+        <menu class="tab-header user-menu-relationship">
+            <li id="tab-header-user-posts"<%- tab === 'posts' ? ' class="selected"' : '' %>>
+                <a href="<%= base %>" data-pjax="#body" data-sound="SE_WAVE_SELECT_TAB">
+                    <span class="label"><%= t.posts %></span>
+                    <span class="number"><span>0</span></span>
+                </a>
+            </li>
+            <li id="tab-header-user-following"<%- tab === 'following' ? ' class="selected"' : '' %>>
+                <a href="<%= base %>/following" data-pjax="#body" data-sound="SE_WAVE_SELECT_TAB">
+                    <span class="label"><%= t.following %></span>
+                    <span class="number"><span class="js-following-count"><%= counts.following %></span></span>
+                </a>
+            </li>
+            <li id="tab-header-user-followers"<%- tab === 'followers' ? ' class="selected"' : '' %>>
+                <a href="<%= base %>/followers" data-pjax="#body" data-sound="SE_WAVE_SELECT_TAB">
+                    <span class="label"><%= t.followers %></span>
+                    <span class="number"><span><%= counts.followers %></span></span>
+                </a>
+            </li>
+        </menu>
+
+        <div class="tab-body">
+            <% if (tab === 'posts' || list.length === 0) { %>
+                <div class="no-content-window">
+                    <div class="window">
+                        <p><%= tab === 'posts' ? t.no_posts : (tab === 'following' ? t.no_following : t.no_followers) %></p>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="user-page-content friend-list">
+                    <ul>
+                        <% list.forEach(function (u) { %>
+                            <li>
+                                <a href="/users/<%= encodeURIComponent(u.user_id) %>" data-pjax="#body" class="icon-container">
+                                    <img class="icon" src="/mii/<%= u.pid %>/normal_face.png" onerror="this.onerror=null;this.src='/img/default_mii/normal_face.png';">
+                                </a>
+                                <p class="title">
+                                    <a href="/users/<%= encodeURIComponent(u.user_id) %>" data-pjax="#body" class="nick-name"><%= u.screen_name %></a>
+                                    <span class="id-name"><%= u.user_id %></span>
+                                </p>
+                                <% if (u.profile_comment) { %>
+                                    <p class="user-profile-memo-content"><%= u.profile_comment %></p>
+                                <% } %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+    </div>
 </div>

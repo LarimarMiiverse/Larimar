@@ -38,7 +38,19 @@
         "instance_label": "Miiverse",
         "instance_current": "Vous utilisez Larimar, qui n'est pas encore terminé. Juxt reste le Miiverse par défaut de Revivetendo.",
         "instance_switch_juxt": "Revenir à Juxt",
-        "instance_switched": "C'est fait ! Fermez Miiverse et rouvrez-le pour revenir à Juxt."
+        "instance_switched": "C'est fait ! Fermez Miiverse et rouvrez-le pour revenir à Juxt.",
+        "user_page": "Page de l'utilisateur",
+        "edit_profile": "Paramètres du profil",
+        "profile_comment": "Commentaire de profil",
+        "no_profile_comment": "Pas encore de commentaire de profil.",
+        "beginner": "Débutant",
+        "intermediate": "Intermédiaire",
+        "expert": "Expert",
+        "game_skill_unknown": "Non renseigné",
+        "save": "Enregistrer",
+        "no_posts": "Aucun message pour l'instant.",
+        "no_following": "Aucun abonnement pour l'instant.",
+        "no_followers": "Aucun abonné pour l'instant."
     },
     "olv.n3ds": {
 

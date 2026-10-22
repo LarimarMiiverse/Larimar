@@ -38,7 +38,19 @@
         "instance_label": "Miiverse",
         "instance_current": "You're using Larimar, which is still unfinished. Juxt is still Revivetendo's default Miiverse.",
         "instance_switch_juxt": "Switch back to Juxt",
-        "instance_switched": "Done! Close Miiverse and open it again to go back to Juxt."
+        "instance_switched": "Done! Close Miiverse and open it again to go back to Juxt.",
+        "user_page": "User Page",
+        "edit_profile": "Profile Settings",
+        "profile_comment": "Profile Comment",
+        "no_profile_comment": "No profile comment yet.",
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "expert": "Expert",
+        "game_skill_unknown": "Not set",
+        "save": "Save",
+        "no_posts": "No posts yet.",
+        "no_following": "Not following anyone yet.",
+        "no_followers": "No followers yet."
     },
     "olv.n3ds": {
 
