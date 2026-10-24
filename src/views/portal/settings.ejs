@@ -35,6 +35,7 @@
                 </ul>
             </form>
 
+            <% if (instanceSwitch) { %>
             <ul class="settings-list">
                 <li>
                     <p class="settings-label"><%= t.instance_label %></p>
@@ -45,6 +46,7 @@
                     </form>
                 </li>
             </ul>
+            <% } %>
         <% } %>
     </div>
 </div>

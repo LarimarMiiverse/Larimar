@@ -4,11 +4,18 @@ const logger = require('./logger');
 
 dotenv.config();
 
-// Which Miiverse a console opens is the only thing Larimar shares with Juxt:
-// Juxt's discovery reads this key. No key means Juxt, so losing it is safe.
-const redis = createClient({ url: process.env.REDIS_URL });
-redis.on('error', (err) => logger.error('Redis: ' + err.message));
-redis.connect().catch(() => {});
+// Optional: when Larimar runs next to Juxt (as on Revivetendo), Juxt's
+// discovery decides per player which Miiverse a console opens, from the Redis
+// key miiverse:instance:<pid>. No key means Juxt. Set REDIS_URL to show the
+// "Switch back to Juxt" option; without it there is no switch at all.
+const enabled = Boolean(process.env.REDIS_URL);
+
+let redis = null;
+if (enabled) {
+  redis = createClient({ url: process.env.REDIS_URL });
+  redis.on('error', (err) => logger.error('Redis: ' + err.message));
+  redis.connect().catch(() => {});
+}
 
 const key = (pid) => `miiverse:instance:${pid}`;
 
@@ -16,4 +23,4 @@ async function switchToJuxt(pid) {
   await redis.del(key(pid));
 }
 
-module.exports = { switchToJuxt };
+module.exports = { instanceSwitchEnabled: enabled, switchToJuxt };

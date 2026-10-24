@@ -1,9 +1,14 @@
 const express = require('express');
 const logger = require('../logger');
-const { switchToJuxt } = require('../instance');
+const { instanceSwitchEnabled, switchToJuxt } = require('../instance');
 const { updateProfile } = require('../database');
 
 const router = express.Router();
+
+router.use((req, res, next) => {
+    res.locals.instanceSwitch = instanceSwitchEnabled;
+    next();
+});
 
 router.get('/', async (req, res) => {
     res.render(req.directory + '/settings.ejs', { switched: false });
@@ -23,7 +28,7 @@ router.post('/profile', async (req, res) => {
 });
 
 router.post('/instance', async (req, res) => {
-    if (req.body.instance !== 'juxt') {
+    if (!instanceSwitchEnabled || req.body.instance !== 'juxt') {
         return res.redirect('/settings');
     }
 
