@@ -1,24 +1,17 @@
+<% const platformTag = { 0: 'wiiu', 1: '3ds', 2: 'wiiu-3ds' }; %>
 <% communities.forEach(community => { %>
     <li id="community-<%= community.olive_community_id %>">
         <span class="icon-container">
-            <img src="<%= community.icon %>" class="icon">
+            <img src="<%= community.icon || '/img/larimar/general-icon.png' %>" class="icon">
         </span>
         <a href="/titles/<%= community.olive_title_id %>/<%= community.olive_community_id %>" data-pjax="#body" class="scroll to-community-button"></a>
         <div class="body">
             <div class="body-content">
                 <span class="community-name title"><%= community.name %></span>
-                <span class="platform-tag platform-tag-<%= community.platform_id == '1' ? 'wiiu' : '3ds' %>"></span>
-                <span class="text">
-                    <% if (community.platform_type == '1' && community.platform_id == '1') { %>
-                        <%= lang["olv.portal"]["wiiu_games"] %> 
-                    <% } else if (community.platform_type == '1' && community.platform_id != '1') { %>
-                        <%= lang["olv.portal"]["3ds_games"] %>
-                    <% } else if (community.platform_type == '2') { %>
-                        <%= lang["olv.portal"]["3ds_games"] %>
-                    <% } else { %>
-                        <%= lang["olv.portal"]["others"] %>
-                    <% } %>
-                </span>
+                <% if (platformTag[community.platform]) { %>
+                    <span class="platform-tag platform-tag-<%= platformTag[community.platform] %>"></span>
+                <% } %>
+                <span class="text"><%= lang["olv.portal"]['category_' + community.category] || community.category %></span>
             </div>
         </div>
     </li>

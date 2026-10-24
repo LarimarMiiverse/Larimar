@@ -1,0 +1,50 @@
+// Minimal subset of account.v2.AccountService, matching the bridge's
+// account-grpc stub (grpc-stubs/cmd/account/main.go) field for field.
+syntax = "proto3";
+
+package account.v2;
+
+service AccountService {
+  rpc ExchangeIndependentServiceTokenForUserData(ExchangeRequest) returns (ExchangeResponse);
+}
+
+message ExchangeRequest {
+  repeated string client_ids = 1;
+  string token = 2;
+}
+
+message Mii {
+  string name = 1;
+  string data = 2;
+  string url = 3;
+}
+
+message PNID {
+  bool deleted = 1;
+  uint32 pid = 2;
+  string username = 3;
+  int32 access_level = 4;
+  string server_access_level = 5;
+  Mii mii = 6;
+  string birthdate = 8;
+  string gender = 9;
+  string country = 10;
+  string language = 11;
+}
+
+message Timestamp {
+  int64 seconds = 1;
+  int32 nanos = 2;
+}
+
+message TokenInfo {
+  int32 system_type = 1;
+  int32 token_type = 2;
+  uint64 pid = 3;
+  Timestamp issue_time = 6;
+}
+
+message ExchangeResponse {
+  PNID pnid = 1;
+  TokenInfo token_info = 3;
+}

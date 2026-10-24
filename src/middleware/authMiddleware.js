@@ -1,4 +1,5 @@
 const { pool } = require('../database');
+const { exchangeServiceToken } = require('../account');
 const logger = require('../logger');
 
 async function authMiddleware(req, res, next) {
@@ -25,40 +26,36 @@ async function authMiddleware(req, res, next) {
     req.param_pack = {};
     req.service_token = service_token;
 
-    for (let i = 0; i < base64Result.length; i += 2) {
+    for (let i = 0; i + 1 < base64Result.length; i += 2) {
         req.param_pack[base64Result[i].trim()] = base64Result[i + 1].trim();
     }
 
     let platform = parseInt(req.param_pack.platform_id); // 3ds = 0 wiiu = 1
-    let account;
+    req.platform = platform === 0 ? '3ds' : 'wiiu';
+
+    const user = await exchangeServiceToken(service_token);
+    if (!user) {
+        return res.status(401).send('Invalid service token.');
+    }
 
     try {
-        if (platform === 0) {
-            req.platform = '3ds';
-            const [rows] = await pool.query(
-                'SELECT * FROM accounts WHERE service_token_3ds = ?',
-                [service_token]
-            );
-            account = rows;
-        } else {
-            req.platform = 'wiiu';
-            const [rows] = await pool.query(
-                'SELECT * FROM accounts WHERE service_token_wiiu = ?',
-                [service_token]
-            );
-            account = rows;
-        }
+        // Accounts are keyed by PID and created on the first visit, from the
+        // PNID behind the service token (Revivetendo's account server).
+        await pool.query(
+            `INSERT INTO accounts (pid, screen_name, user_id, password, language, country)
+             VALUES (?, ?, ?, '', ?, ?)
+             ON DUPLICATE KEY UPDATE screen_name = VALUES(screen_name), updated_at = current_timestamp()`,
+            [user.pid, (user.miiName || user.username).slice(0, 30), user.username, (user.language || 'en').slice(0, 8), (user.country || '').slice(0, 2) || null]
+        );
+        const [rows] = await pool.query('SELECT * FROM accounts WHERE pid = ?', [user.pid]);
+        req.account = rows[0] || null;
     } catch (err) {
         logger.error(err);
         return res.sendStatus(500);
     }
 
-    req.account = account?.[0] || null;
-
-    // If you don't have an account, go to welcome page
     if (!req.account) {
-        if (req.path === '/welcome') return next();
-        return res.redirect(302, '/welcome');
+        return res.sendStatus(500);
     }
 
     next();

@@ -2,7 +2,7 @@
   <li id="global-menu-mymenu">
     <a href="/users/<%= account.user_id %>" data-pjax="#body" data-sound="SE_WAVE_MENU">
       <span class="mii-icon">
-        <img src="/img/default_mii/normal_face.png" alt="User Menu">
+        <img src="/mii/<%= account.pid %>/normal_face.png" onerror="this.onerror=null;this.src='/img/default_mii/normal_face.png';" alt="User Menu">
       </span>
       <span><%= lang["olv.portal"].user_menu %></span>
     </a>

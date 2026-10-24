@@ -1,24 +1,24 @@
 <%- include('partials/header') %>
+<% const t = lang["olv.portal"]; %>
 
 <div id="body">
     <header id="header">
-        <h1 id="page-title" class="left"><%= lang["olv.portal"].community %></h1>
+        <h1 id="page-title" class="left"><%= t.favorites_communities %></h1>
     </header>
 
-    <div class="body-content tab2-content" id="community-top">
-        <menu class="tab-header tab-header-community">
-            <li id="tab-header-favorite-community" class="tab-button selected"><a href="/communities/favorites" data-pjax="#body" data-pjax-replace="1" data-sound="SE_WAVE_SELECT_TAB"><span>Favorites</span></a></li>
-            <li id="tab-header-played-post" class="tab-button disabled"><a class="disabled"><span><%= lang["olv.portal"].played %></span></a></li>
-        </menu>
-
-        <div class="tab-body">
-            <div class="community-list">
-	            <div class="no-content-window">
+    <div class="body-content" id="community-top">
+        <div class="community-list">
+            <% if (communities.length) { %>
+                <ul class="list-content-with-icon-column">
+                    <%- include('partials/community') %>
+                </ul>
+            <% } else { %>
+                <div class="no-content-window">
                     <div class="window">
-                        <p>Tap the ☆ icon on a community's page to add it to your favorites.</p>
+                        <p><%= t.no_favorites %></p>
                     </div>
                 </div>
-            </div>
+            <% } %>
         </div>
     </div>
 </div>

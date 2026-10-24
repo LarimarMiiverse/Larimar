@@ -9,8 +9,10 @@ const communities = require('./communities');
 const messages = require('./messages');
 const news = require('./news');
 const users = require('./users');
+const settings = require('./settings');
 
 console.use('/', activity);
+console.use('/settings', settings);
 console.use('/titles/show', show);
 console.use('/titles', communities);
 console.use('/communities', communities);

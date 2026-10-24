@@ -1,0 +1,65 @@
+<%- include('partials/header') %>
+<% const t = lang["olv.portal"]; %>
+<% const base = '/titles/' + community.olive_title_id + '/' + community.olive_community_id; %>
+
+<div id="body">
+    <header id="header">
+        <h1 id="page-title" class="left"><%= t.new_post %> - <%= community.name %></h1>
+    </header>
+
+    <div class="body-content" id="larimar-post-form">
+        <% if (error) { %>
+            <div class="window"><p><%= error %></p></div>
+        <% } %>
+
+        <form method="post" action="<%= base %>/post" data-allow-submission="1">
+            <ul class="settings-list">
+                <li>
+                    <textarea name="body" maxlength="<%= maxBody %>" rows="5" class="textarea" placeholder="<%= t.post_placeholder %>"><%= body %></textarea>
+                </li>
+                <li>
+                    <a href="#" class="button" id="larimar-draw-button" data-sound="SE_WAVE_OK"><%= t.draw %></a>
+                    <img id="larimar-memo-preview" class="none" width="320" height="120" alt="">
+                    <input type="hidden" name="painting" id="larimar-memo-value" value="">
+                </li>
+                <li>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="spoiler" value="1">
+                        <%= t.spoilers %>
+                    </label>
+                </li>
+                <li>
+                    <input type="submit" class="button" value="<%= t.post %>" data-sound="SE_WAVE_OK">
+                    <a href="<%= base %>" class="button" data-sound="SE_WAVE_BACK"><%= t.cancel %></a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<script>
+// The Wii U memo app: open it, wait until the player closes it, then submit
+// getImage(true) (zlib-compressed TGA, what Miiverse posted) and preview
+// getImage(false) (a BMP).
+(function () {
+    var button = document.getElementById('larimar-draw-button');
+    var preview = document.getElementById('larimar-memo-preview');
+    var value = document.getElementById('larimar-memo-value');
+
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (typeof wiiuMemo === 'undefined') return;
+        wiiuMemo.open(value.value === '');
+        var poll = setInterval(function () {
+            if (!wiiuMemo.isFinish()) return;
+            clearInterval(poll);
+            var tgaz = wiiuMemo.getImage(true);
+            if (tgaz) {
+                value.value = tgaz;
+                preview.src = 'data:image/bmp;base64,' + wiiuMemo.getImage(false);
+                preview.className = '';
+            }
+        }, 40);
+    });
+})();
+</script>

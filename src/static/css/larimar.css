@@ -1,0 +1,22 @@
+/* Larimar's own additions, loaded after the original portal.css.
+ *
+ * One offset for the 160px global menu on every page, instead of the side
+ * margins portal.css gives each kind of block (and its -20px pull on the
+ * user page tabs). #header already clears the menu itself. */
+#body > .body-content {
+    margin-left: 160px;
+}
+
+.body-content > .no-content-window,
+.body-content > .tab-header,
+.body-content > .user-menu,
+.body-content > .news-label,
+.body-content.message-post-list,
+.body-content#post-permalink,
+.body-content#reply-permalink,
+.body-content.post-list,
+.user-page .tab-header.user-menu-activity,
+.user-page .tab-header.user-menu-relationship {
+    margin-left: 0;
+    margin-right: 0;
+}
